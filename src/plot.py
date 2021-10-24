@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-DATA_DIR = "raw_data/"
+DATA_DIR = "../raw_data/"
 
 
 def plot_acc_data(filename, show_plot=False):
