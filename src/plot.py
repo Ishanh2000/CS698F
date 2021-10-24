@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-DATA_DIR = "/home/ashwin/acads_ws/SEM7/CS698F_Project/raw_data/"
+DATA_DIR = "raw_data/"
 
 
 def plot_acc_data(filename, show_plot=False):
@@ -25,25 +25,25 @@ def plot_acc_data(filename, show_plot=False):
         plt.plot(timestamps, acc_total)
         plt.ylabel(r"Total Acceleration")
         plt.xlabel("Time (s)")
-        axes_plot = plt.figure()
-        plt.subplot(311)
-        plt.plot(timestamps, acc_x)
-        plt.ylabel(r"$a_x$")
-        plt.xlabel("Time (s)")
-        plt.subplot(312)
-        plt.plot(timestamps, acc_y)
-        plt.ylabel(r"$a_y$")
-        plt.xlabel("Time (s)")
-        plt.subplot(313)
-        plt.plot(timestamps, acc_z)
-        plt.ylabel(r"$a_z$")
-        plt.xlabel("Time (s)")
-        plt.
+        plt.locator_params(axis="x", nbins=40)
+        # axes_plot = plt.figure()
+        # plt.subplot(311)
+        # plt.plot(timestamps, acc_x)
+        # plt.ylabel(r"$a_x$")
+        # plt.xlabel("Time (s)")
+        # plt.subplot(312)
+        # plt.plot(timestamps, acc_y)
+        # plt.ylabel(r"$a_y$")
+        # plt.xlabel("Time (s)")
+        # plt.subplot(313)
+        # plt.plot(timestamps, acc_z)
+        # plt.ylabel(r"$a_z$")
+        # plt.xlabel("Time (s)")
 
     return timestamps, acc_total, (acc_x, acc_y, acc_z), (total_plot, axes_plot)
 
 
 plot_acc_data("fwd_bkwd.csv", show_plot=True)
-plot_acc_data("wave.csv", show_plot=True)
-plot_acc_data("cross.csv", show_plot=True)
+# plot_acc_data("wave.csv", show_plot=True)
+# plot_acc_data("cross.csv", show_plot=True)
 plt.show()
