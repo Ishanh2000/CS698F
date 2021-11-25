@@ -5,8 +5,8 @@ import stumpy
 import matplotlib.dates as dates
 from matplotlib.patches import Rectangle
 
-timestamps, acc_total, (acc_x, acc_y, acc_z), _ = plot_acc_data("wave.csv")
-window = 500
+timestamps, acc_total, (acc_x, acc_y, acc_z), _ = plot_acc_data("clean_templates/wave/2.csv", dir="")
+window = 80
 profile = stumpy.stump(acc_total, window)
 motif_idx = np.argsort(profile[:, 0])[0]
 nearest_neighbor_idx = profile[motif_idx, 1]

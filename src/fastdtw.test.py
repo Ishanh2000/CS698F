@@ -1,16 +1,19 @@
+from re import A
 import numpy as np
 import matplotlib.pyplot as plt
-from dtw_cosine import dtw, plot_alignment
+from numpy.core.shape_base import block
+from numpy.testing._private.utils import _assert_valid_refcount
 from timeit import default_timer as timer
+from dtw_variants import fast_dtw, plot_alignment_with_variants
 from tqdm import tqdm
 from preprocess import preprocess_axis
 
-TEST_FILE = "test/cross/sensor.csv"
+TEST_FILE = "test/sensor.csv"
 # TEMPLATE_DIR = "raw_templates/"
+# TIME_FILE = "times/fastdtw.txt"
 TEMPLATE_DIR = "clean_templates/"
-# TIME_FILE = "times/dtw_cosine.txt"
-TIME_FILE = "times/dtw_cosine_clean.txt"
-NUM_RUNS = 1
+TIME_FILE = "times/fastdtw_clean.txt"
+NUM_RUNS = 100
 
 
 def read_acc_data(filename, show_plot=False):
@@ -21,7 +24,7 @@ def read_acc_data(filename, show_plot=False):
     acc_z = []
     with open(filename, "r") as f:
         for line in f.readlines()[1:]:
-            ts, ax, ay, az, at = list(map(float, line.split(",")))
+            ts, ax, ay, az, at = list(map(float, line.split(",")))[:5]
             timestamps.append(ts)
             acc_total.append(at)
             acc_x.append(ax)
@@ -36,7 +39,7 @@ def read_acc_data(filename, show_plot=False):
     return timestamps, acc_total, [acc_x, acc_y, acc_z], total_plot
 
 
-def match_dtw():
+def match_dtw_sc():
     min_score = float("inf")
     alignment = None
     cost_matrix = None
@@ -64,10 +67,11 @@ def match_dtw():
             for i in range(num_templates):
                 template_file = TEMPLATE_DIR + g + "/" + str(i + 1) + ".csv"
                 _, at, template, _ = read_acc_data(template_file)
+
                 elapse = 0
                 for i in tqdm(range(NUM_RUNS)):
                     start = timer()
-                    score, cm, al = dtw(template, test_data)
+                    score, cm, al = fast_dtw(template, test_data)
                     end = timer()
                     elapse += end - start
                 f.write(("{},{},{}\n".format(len(at), len(test_data[0]), elapse / 100)))
@@ -94,8 +98,9 @@ def match_dtw():
                 match_at = best_at
 
         print("Best Match: ", match_gesture)
-        plot_alignment(cost_matrix, alignment, at_data, match_at)
+        plot_alignment_with_variants(cost_matrix, alignment, at_data, match_at)
+        # plot_dtw(at_data, match_at, cost_matrix, alignment)
         plt.show()
 
 
-match_dtw()
+match_dtw_sc()
