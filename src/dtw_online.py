@@ -1,11 +1,8 @@
-from re import template
-from types import CodeType
 import numpy as np
 import matplotlib.pyplot as plt
 from timeit import default_timer as timer
 from dtw_cosine import dtw
 from dtw_variants import dtw_sakoe_chiba, fast_dtw, plot_alignment_with_variants
-from tqdm import tqdm
 from preprocess import preprocess_axis, downsample_axis
 import os
 import warnings

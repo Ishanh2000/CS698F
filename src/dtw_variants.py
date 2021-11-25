@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from matplotlib.ticker import NullFormatter, FormatStrFormatter
 from fastdtw import fastdtw
 
 

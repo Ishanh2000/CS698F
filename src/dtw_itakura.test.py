@@ -1,4 +1,3 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from timeit import default_timer as timer
 from dtw_variants import dtw_itakura, plot_alignment_with_variants

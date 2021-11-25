@@ -1,7 +1,4 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from numpy.core.shape_base import block
-from numpy.testing._private.utils import _assert_valid_refcount
 from timeit import default_timer as timer
 from dtw_variants import dtw_sakoe_chiba, plot_alignment_with_variants
 from tqdm import tqdm
