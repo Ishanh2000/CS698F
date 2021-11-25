@@ -65,6 +65,23 @@ Within the `match_dtw_..` functions:
 `num_templates`: Number of templates to average the matching over
 ```
 
+Using SoftDTW for inferencing:
+```
+$ pip3 install torch numba # installation dependencies
+$ cd src
+$ # goto line 61 and chose list of test files
+$ python3 soft.py
+```
+
+Starting Server (high failure probability):
+```
+$ pip3 install flask flask_cors
+$ cd src
+$ export FLASK_APP=server
+$ flask run --host=0.0.0.0
+```
+After this, open IP Adress of the server machine on mobile. Say IPA = 192.168.1.45:5000, then open http://192.168.1.45:5000/
+
 ## References
 
 Soft DTW (quadratic) using CUDA cited from: [https://github.com/Maghoumi/pytorch-softdtw-cuda](https://github.com/Maghoumi/pytorch-softdtw-cuda)

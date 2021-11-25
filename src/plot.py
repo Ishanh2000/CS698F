@@ -7,13 +7,13 @@ import os
 DATA_DIR = "raw_data/"
 
 
-def plot_acc_data(filename, dir=DATA_DIR, show_plot=False):
+def plot_acc_data(filename, show_plot=False):
     timestamps = []
     acc_total = []
     acc_x = []
     acc_y = []
     acc_z = []
-    with open(dir + filename, "r") as f:
+    with open(DATA_DIR + filename, "r") as f:
         for line in f.readlines()[1:]:
             ts, ax, ay, az, at = list(map(float, line.split(",")))
             timestamps.append(ts)
@@ -49,33 +49,32 @@ def plot_acc_data(filename, dir=DATA_DIR, show_plot=False):
 def plot_all_data(fname):
     f = open(fname)
     allRows = list(csv.reader(f))
-    headers, rows = allRows[0], np.array([[float(x) for x in row] for row in allRows[1:]])
-    dims = len(headers) - 1  # total dimensions of movements
+    headers, rows = allRows[0], np.array([ [ float(x) for x in row ] for row in allRows[1:]])
+    dims = len(headers)-1 # total dimensions of movements
     plt.figure()
     zeroLine = [0 for row in rows]
     for i in range(dims):
-        # if i != 4: continue
-        plt.subplot(2, 3, i + 1)
-        plt.plot(rows[:, (i + 1)])
+        if i != 0: continue
+        # plt.subplot(2, 3, i+1)
+        plt.plot(rows[:,(i+1)])
         plt.plot(zeroLine)
-        plt.ylabel(headers[i + 1])
+        plt.ylabel(headers[i+1])
     plt.show()
     f.close()
-
+    
 
 def split_data(name, arr):
     f = open(f"../raw_data/{name}.csv")
     allRows = f.readlines()
     headers, rows = allRows[0], allRows[1:]
-    for i in range(len(arr) - 1):
-        if not os.path.isdir(f"../raw_templates/{name}"):
-            os.mkdir(f"../raw_templates/{name}")
+    for i in range(len(arr)-1):
+        if not os.path.isdir(f"../raw_templates/{name}"): os.mkdir(f"../raw_templates/{name}")
         fout = open(f"../raw_templates/{name}/{i+1}.csv", "w")
         fout.write(headers)
-        for j in range(arr[i], arr[i + 1] + 1):
-            fout.write(rows[j])  # now write data points
+        for j in range(arr[i], arr[i+1]+1): fout.write(rows[j]) # now write data points
         fout.close()
     f.close()
+
 
 
 if __name__ == "__main__":
@@ -86,17 +85,21 @@ if __name__ == "__main__":
     # plt.show()
 
     # additions by Ishanh
+    ################ FLIP FLOP DATA ################
     plot_all_data(f"../raw_data/flip_flop.csv")
     # split_data("flip_flop", [
     #       53,  200,  337,  473,  602,  729,  875,  997, 1116, 1243, 1373, 1511, 1651, 1786, 1920, 2040, 2175,
     #     2311, 2443, 2570, 2715, 2834, 2979, 3091, 3226, 3353, 3489, 3613, 3735, 3882, 4024, 4141, 4277
     # ])
-    for i in range(16):
-        plot_all_data(f"../raw_templates/flip/{1+i}.csv")
-    for i in range(16):
-        plot_all_data(f"../raw_templates/flop/{1+i}.csv")
-
-    #
-
-
-# with intervals, 15 copies each of up_down, flip_flop, bow, left_right
+    for i in range(16): plot_all_data(f"../raw_templates/flip/{1+i}.csv")
+    for i in range(16): plot_all_data(f"../raw_templates/flop/{1+i}.csv")
+    
+    # ################ BOW UP/DOWN DATA ################
+    plot_all_data(f"../raw_data/bow_up_down.csv")
+    # # split_data("bow_up_down", [
+    # #       23,  126,  260,  380,  499,  631,  762,  899, 1029, 1164, 1284, 1419, 1542, 1677, 1819, 1952,
+    # #     2076, 2208, 2351, 2477, 2599, 2736, 2865, 2998, 3132, 3263, 3394, 3522, 3655, 3786, 3919
+    # # ])
+    for i in range(15): plot_all_data(f"../raw_templates/bow_up/{1+i}.csv")
+    for i in range(15): plot_all_data(f"../raw_templates/bow_down/{1+i}.csv")
+    
